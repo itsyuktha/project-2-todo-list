@@ -1,32 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My To-Do List</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+* {
+    box-sizing: border-box;
+}
 
-<body>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #fce4ec, #e8eaf6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
 
-    <div class="todo-container">
-        <h1>My To-Do List 📝</h1>
+.todo-container {
+    background: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    max-width: 520px;
+    padding: 35px;
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
 
-        <div class="input-section">
-            <input type="text" id="taskInput" placeholder="Enter a task...">
-            <button id="addButton">Add</button>
-        </div>
+h1 {
+    text-align: center;
+    margin: 0 0 25px;
+    font-size: 32px;
+}
 
-        <p id="taskCount">0 tasks left</p>
+.input-section {
+    display: flex;
+    gap: 10px;
+}
 
-        <p id="emptyMessage">
-            No tasks yet! Add something to get started ✨
-        </p>
+input {
+    flex: 1;
+    padding: 14px 16px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
 
-        <ul id="taskList"></ul>
-    </div>
+input:focus {
+    border-color: #b39ddb;
+}
 
-    <script src="script.js"></script>
+#addButton {
+    background: #9575cd;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+}
 
-</body>
-</html>
+#addButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(149, 117, 205, 0.3);
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#taskCount {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    margin: 18px 0 5px;
+}
+
+#emptyMessage {
+    text-align: center;
+    color: #aaa;
+    margin: 20px 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+li {
+    background: #f8f7fc;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+}
+
+li:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+li span {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+li span.completed {
+    text-decoration: line-through;
+    opacity: 0.45;
+}
+
+li button {
+    background: transparent;
+    padding: 6px;
+    transition: 0.2s;
+}
+
+li button:hover {
+    transform: scale(1.15);
+}
