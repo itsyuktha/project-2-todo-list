@@ -54,4 +54,33 @@ li {
     padding: 12px;
     margin-bottom: 10px;
     border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li span {
+    cursor: pointer;
+}
+
+li span.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+li button {
+    background: transparent;
+    padding: 5px;
+}
+
+#taskCount {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+}
+
+#emptyMessage {
+    text-align: center;
+    color: #999;
+    margin-top: 20px;
 }
