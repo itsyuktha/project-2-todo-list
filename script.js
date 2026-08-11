@@ -1,16 +1,35 @@
+
 const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 const taskList = document.getElementById("taskList");
 const taskCount = document.getElementById("taskCount");
 const emptyMessage = document.getElementById("emptyMessage");
 const filterButtons = document.querySelectorAll(".filter");
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
 let currentFilter = "all";
 
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function updateProgress() {
+    const totalTasks = tasks.length;
+
+    const completedTasks = tasks.filter(function (task) {
+        return task.completed;
+    }).length;
+
+    const percentage = totalTasks === 0
+        ? 0
+        : Math.round((completedTasks / totalTasks) * 100);
+
+    progressBar.style.width = percentage + "%";
+    progressText.textContent =
+        completedTasks + " of " + totalTasks +
+        " tasks completed (" + percentage + "%)";
 }
 
 function displayTasks() {
@@ -22,6 +41,8 @@ function displayTasks() {
     }).length;
 
     taskCount.textContent = remainingTasks + " tasks left";
+
+    updateProgress();
 
     let filteredTasks = tasks;
 
@@ -44,11 +65,9 @@ function displayTasks() {
 
         if (currentFilter === "completed") {
             emptyMessage.textContent = "No completed tasks yet ✨";
-        } 
-        else if (currentFilter === "active") {
+        } else if (currentFilter === "active") {
             emptyMessage.textContent = "No active tasks! 🎉";
-        } 
-        else {
+        } else {
             emptyMessage.textContent =
                 "No tasks yet! Add something to get started ✨";
         }
@@ -59,7 +78,6 @@ function displayTasks() {
         const originalIndex = tasks.indexOf(task);
 
         const listItem = document.createElement("li");
-
         const taskSpan = document.createElement("span");
 
         taskSpan.textContent = task.text;
@@ -110,7 +128,6 @@ function addTask() {
     });
 
     saveTasks();
-
     displayTasks();
 
     taskInput.value = "";
