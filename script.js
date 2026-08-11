@@ -2,7 +2,46 @@ const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 const taskList = document.getElementById("taskList");
 
-addButton.addEventListener("click", addTask);
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function displayTasks() {
+    taskList.innerHTML = "";
+
+    tasks.forEach(function (task, index) {
+        const listItem = document.createElement("li");
+
+        const taskSpan = document.createElement("span");
+        taskSpan.textContent = task.text;
+
+        if (task.completed) {
+            taskSpan.classList.add("completed");
+        }
+
+        taskSpan.addEventListener("click", function () {
+            tasks[index].completed = !tasks[index].completed;
+            saveTasks();
+            displayTasks();
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "🗑️";
+
+        deleteButton.addEventListener("click", function () {
+            tasks.splice(index, 1);
+            saveTasks();
+            displayTasks();
+        });
+
+        listItem.appendChild(taskSpan);
+        listItem.appendChild(deleteButton);
+
+        taskList.appendChild(listItem);
+    });
+}
 
 function addTask() {
     const taskText = taskInput.value.trim();
@@ -11,26 +50,17 @@ function addTask() {
         return;
     }
 
-    const listItem = document.createElement("li");
-
-    const taskSpan = document.createElement("span");
-    taskSpan.textContent = taskText;
-
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "🗑️";
-
-    taskSpan.addEventListener("click", function () {
-        taskSpan.classList.toggle("completed");
+    tasks.push({
+        text: taskText,
+        completed: false
     });
 
-    deleteButton.addEventListener("click", function () {
-        listItem.remove();
-    });
-
-    listItem.appendChild(taskSpan);
-    listItem.appendChild(deleteButton);
-
-    taskList.appendChild(listItem);
+    saveTasks();
+    displayTasks();
 
     taskInput.value = "";
 }
+
+addButton.addEventListener("click", addTask);
+
+displayTasks();
