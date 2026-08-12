@@ -1,4 +1,5 @@
-const taskInput = document.getElementById("taskInput");
+
+    const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 const taskList = document.getElementById("taskList");
 const taskCount = document.getElementById("taskCount");
@@ -88,6 +89,7 @@ function displayTasks() {
             taskSpan.classList.add("completed");
         }
 
+        // COMPLETE TASK
         taskSpan.addEventListener("click", function () {
 
             tasks[originalIndex].completed =
@@ -100,7 +102,7 @@ function displayTasks() {
         // EDIT BUTTON
         const editButton = document.createElement("button");
 
-        editButton.textContent = "✏️";
+        editButton.textContent = "Edit";
 
         editButton.addEventListener("click", function () {
 
@@ -121,7 +123,7 @@ function displayTasks() {
         // DELETE BUTTON
         const deleteButton = document.createElement("button");
 
-        deleteButton.textContent = "🗑️";
+        deleteButton.textContent = "Delete";
 
         deleteButton.addEventListener("click", function () {
 
