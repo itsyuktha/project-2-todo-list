@@ -1,4 +1,3 @@
-
 const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 const taskList = document.getElementById("taskList");
@@ -22,18 +21,19 @@ function updateProgress() {
         return task.completed;
     }).length;
 
-    const percentage = totalTasks === 0
-        ? 0
-        : Math.round((completedTasks / totalTasks) * 100);
+    const percentage =
+        totalTasks === 0
+            ? 0
+            : Math.round((completedTasks / totalTasks) * 100);
 
     progressBar.style.width = percentage + "%";
+
     progressText.textContent =
         completedTasks + " of " + totalTasks +
         " tasks completed (" + percentage + "%)";
 }
 
 function displayTasks() {
-
     taskList.innerHTML = "";
 
     const remainingTasks = tasks.filter(function (task) {
@@ -64,9 +64,11 @@ function displayTasks() {
     if (filteredTasks.length === 0) {
 
         if (currentFilter === "completed") {
-            emptyMessage.textContent = "No completed tasks yet ✨";
+            emptyMessage.textContent =
+                "No completed tasks yet ✨";
         } else if (currentFilter === "active") {
-            emptyMessage.textContent = "No active tasks! 🎉";
+            emptyMessage.textContent =
+                "No active tasks! 🎉";
         } else {
             emptyMessage.textContent =
                 "No tasks yet! Add something to get started ✨";
@@ -95,6 +97,28 @@ function displayTasks() {
             displayTasks();
         });
 
+        // EDIT BUTTON
+        const editButton = document.createElement("button");
+
+        editButton.textContent = "✏️";
+
+        editButton.addEventListener("click", function () {
+
+            const newText = prompt(
+                "Edit your task:",
+                tasks[originalIndex].text
+            );
+
+            if (newText !== null && newText.trim() !== "") {
+
+                tasks[originalIndex].text = newText.trim();
+
+                saveTasks();
+                displayTasks();
+            }
+        });
+
+        // DELETE BUTTON
         const deleteButton = document.createElement("button");
 
         deleteButton.textContent = "🗑️";
@@ -108,6 +132,7 @@ function displayTasks() {
         });
 
         listItem.appendChild(taskSpan);
+        listItem.appendChild(editButton);
         listItem.appendChild(deleteButton);
 
         taskList.appendChild(listItem);
@@ -140,7 +165,6 @@ taskInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         addTask();
     }
-
 });
 
 filterButtons.forEach(function (button) {
@@ -157,7 +181,6 @@ filterButtons.forEach(function (button) {
 
         displayTasks();
     });
-
 });
 
 displayTasks();
