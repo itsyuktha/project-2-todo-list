@@ -1,5 +1,5 @@
 
-    const taskInput = document.getElementById("taskInput");
+   const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 const taskList = document.getElementById("taskList");
 const taskCount = document.getElementById("taskCount");
@@ -7,6 +7,7 @@ const emptyMessage = document.getElementById("emptyMessage");
 const filterButtons = document.querySelectorAll(".filter");
 const progressBar = document.getElementById("progressBar");
 const progressText = document.getElementById("progressText");
+const clearCompleted = document.getElementById("clearCompleted");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let currentFilter = "all";
@@ -141,6 +142,7 @@ function displayTasks() {
     });
 }
 
+// ADD TASK
 function addTask() {
 
     const taskText = taskInput.value.trim();
@@ -162,6 +164,7 @@ function addTask() {
 
 addButton.addEventListener("click", addTask);
 
+// ENTER KEY
 taskInput.addEventListener("keydown", function (event) {
 
     if (event.key === "Enter") {
@@ -169,6 +172,7 @@ taskInput.addEventListener("keydown", function (event) {
     }
 });
 
+// FILTER BUTTONS
 filterButtons.forEach(function (button) {
 
     button.addEventListener("click", function () {
@@ -185,4 +189,16 @@ filterButtons.forEach(function (button) {
     });
 });
 
+// CLEAR COMPLETED TASKS
+clearCompleted.addEventListener("click", function () {
+
+    tasks = tasks.filter(function (task) {
+        return !task.completed;
+    });
+
+    saveTasks();
+    displayTasks();
+});
+
+// DISPLAY TASKS WHEN PAGE LOADS
 displayTasks();
